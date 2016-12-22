@@ -1,9 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * Date: 21.12.2016
- */
 
+$start = microtime(true);
+
+set_include_path(get_include_path().PATH_SEPARATOR.'../lib'.PATH_SEPARATOR.'../lib_parse'.PATH_SEPARATOR.'../phpQuery');
+spl_autoload_extensions("_class.php");spl_autoload_register();
 
 ?>
 <!doctype html>
@@ -15,16 +15,38 @@
 
 <body>
 <form action="" method="post">
-    <input type="text" name="url" value="http://dp-malish">
-    <input type="submit">
+    <table>
+        <tr>
+            <td>Имя файла:</td>
+            <td><input type="text" name="filename" value="index.tmp"></td>
+        </tr>
+        <tr>
+            <td>Карта сайта:</td>
+            <td>
+                <input type="text" name="url" value="http://domosedkam.ru/sitemap_addl.xml.gz">
+                <!--<input type="text" name="url" value="http://dp-malish.com/def.xml">-->
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit"></td>
+        </tr>
+
+
+    </table>
 </form>
 <?php
-/**
- * Created by PhpStorm.
- * Date: 21.12.2016
- */
+
+if(isset($_POST['url'])){
+    $s_map= new ParseSitemap();
+    $s_map->gzip_xml($_POST['url']);
+}
 
 
+
+
+$time = microtime(true) - $start;
+printf("<br>".date('H:i:s').' Готово! Процесс выполнялся %.4F сек.', $time);
 ?>
 </body>
 </html>

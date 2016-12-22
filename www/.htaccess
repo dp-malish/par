@@ -1,0 +1,10 @@
+AddDefaultCharset UTF-8
+DirectoryIndex index.php
+RewriteEngine on
+RewriteBase /
+Options +FollowSymlinks
+#RewriteCond %{HTTP_HOST} ^www.dp.com
+#RewriteRule ^(.*)$ http://dp.com/$1 [R=301,L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*) /?%{QUERY_STRING}
