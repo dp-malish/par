@@ -18,7 +18,7 @@ spl_autoload_extensions("_class.php");spl_autoload_register();
     <table>
         <tr>
             <td>Имя файла:</td>
-            <td><input type="text" name="filename" value="index.tmp"></td>
+            <td><input type="text" name="filename" value="index.xml"></td>
         </tr>
         <tr>
             <td>Карта сайта:</td>
@@ -34,12 +34,11 @@ spl_autoload_extensions("_class.php");spl_autoload_register();
 
 
     </table>
-</form>
-<?php
+</form><?php
 
 if(isset($_POST['url'])){
     $s_map= new ParseSitemap();
-    $s_map->gzip_xml($_POST['url']);
+    $s_map->gzip_or_xml($_POST['url']);
 }
 
 
