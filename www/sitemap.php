@@ -17,17 +17,14 @@ spl_autoload_extensions("_class.php");spl_autoload_register();
 <form action="" method="post">
     <table>
         <tr>
+            <td>Имя файла:</td>
+            <td><input type="text" name="filename" value="index.tmp"></td>
+        </tr>
+        <tr>
             <td>Карта сайта:</td>
             <td>
-                <select name="sitemap"><?php
-                    $filelist=glob("../cache_all/parse/*.tmp");//../cache_all/parse/
-                    //print_r($filelist);
-                    foreach($filelist as $val){
-                        $x=explode('/',$val);
-                        echo '<option value="'.$x[3].'">'.$x[3].'</option>';
-                    }
-                    ?>
-                </select>
+                <input type="text" name="url" value="http://domosedkam.ru/sitemap_addl.xml.gz">
+                <!--<input type="text" name="url" value="http://dp-malish.com/def.xml">-->
             </td>
         </tr>
         <tr>
@@ -39,15 +36,15 @@ spl_autoload_extensions("_class.php");spl_autoload_register();
     </table>
 </form><?php
 
-if(isset($_POST['sitemap'])){
-    /*$html=new Curl();
-    echo $html->connectLow($_POST['url']);*/
-
+if(isset($_POST['url'])){
     $s_map= new ParseSitemap();
-    $url=$s_map->getUrl($_POST['sitemap']);
-    echo $url;
-
+    if($_POST['filename']!=''){
+        $s_map->gzip_or_xml($_POST['url'],Validator::html_cod($_POST['filename']));
+    }else $s_map->gzip_or_xml($_POST['url']);
 }
+
+
+
 
 $time = microtime(true) - $start;
 printf("<br>".date('H:i:s').' Готово! Процесс выполнялся %.4F сек.', $time);

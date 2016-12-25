@@ -53,4 +53,11 @@ class ParseSitemap extends Cache_File{
         }
         $this->StopCacheWithOut($filename);
     }
+    //*********************
+    public function getUrl($file,$count=4){
+        $file=Validator::html_cod($file);
+        $file=file_get_contents($this->dir.$file);
+        $url=explode('<br>',$file);
+        return $url[$count];
+    }
 }

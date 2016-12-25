@@ -4,21 +4,27 @@
  * Created by PhpStorm.
  * User: WinTeh
  * Date: 21.12.2016
- * Time: 14:15
  */
 class Curl{
 
-    public $url=null;
-    public $cookie='/cookie.txt';
+    public function connectLow($url){
+        $url=Validator::html_cod($url);
+        $url=curl_init($url);
 
+        curl_setopt($url, CURLOPT_RETURNTRANSFER, 1); // возвратить то что вернул сервер
+        curl_setopt($url, CURLOPT_REFERER, 'http://www.google.com/'); //делаем вид что перешли из google
 
-    public function __construct(){
-        //если требуется авторизация то нужно задать эти параметры при создании обьетк
-        $this->url			=		$options['url']; //только url сайта
-        $this->cookie_patch = 		$options['cookie_patch']."/cookie.txt";	//путь куда будем сохранять куки для авторизации
-        return $this;
+        curl_setopt($url, CURLOPT_FOLLOWLOCATION, 1); // следовать за редиректами
+        curl_setopt($url, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36 OPR/42.0.2393.85');
+        //curl_setopt($url, CURLOPT_HEADER, 1); //выводим заголовок чтобы по нему определить авторизовались или нет
+
+        $res=curl_exec($url);//выполняем curl с указанными выше настройками
+        if(curl_errno($url)){//если есть ошибки выводим их
+            print curl_error($url);
+            exit;
+        }
+        curl_close($url);
+        return $res;
     }
-    
-    private conne
 
 }
