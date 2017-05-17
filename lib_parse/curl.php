@@ -11,6 +11,9 @@ class Curl{
         $url=Validator::html_cod($url);
         $url=curl_init($url);
 
+        curl_setopt($url, CURLOPT_SSL_VERIFYPEER, 0);// не проверять SSL сертификат
+        curl_setopt($url, CURLOPT_SSL_VERIFYHOST, 0);// не проверять Host SSL сертификата
+
         curl_setopt($url, CURLOPT_RETURNTRANSFER, 1); // возвратить то что вернул сервер
         curl_setopt($url, CURLOPT_REFERER, 'http://www.google.com/'); //делаем вид что перешли из google
 
