@@ -10,6 +10,7 @@ class Optsql{
             case 'dp.my':$this->db_con=['root','root','malish'];break;
             case 'win.my':$this->db_con=['root','root','winteh'];break;
             case 'mpk.my': $this->db_con=['root','root','mpk'];break;
+            case 'klopotenko': $this->db_con=['root','root','klopotenko'];break;
             default:$this->db_con=['root','root','malish'];
             }
         }else{
@@ -17,6 +18,7 @@ class Optsql{
                 case'dp.my':$this->db_con=['root','root','malish_img'];break;
                 case'win.my':$this->db_con = ['root','root','winteh_img'];break;
                 case'mpk.my':$this->db_con = ['root','root','mpk_img'];break;
+                case'klopotenko':$this->db_con = ['root','root','klopotenko'];break;
                 default:$this->db_con=['root','root','malish'];
             }
         }

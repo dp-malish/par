@@ -23,21 +23,52 @@ CREATE TABLE IF NOT EXISTS content(
   data int(11),
   views int(11) DEFAULT 13,
   comment int(11),
-  donor varchar(255) NOT NULL,
+  donor int(11),
 
   PRIMARY KEY (id),
   UNIQUE KEY link(link),
   KEY (heading,category)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-/*
-CREATE TABLE IF NOT EXISTS content(
-  id int(11) NOT NULL AUTO_INCREMENT,
-  link varchar(255) NOT NULL,
-  link_name varchar(255) NOT NULL,
-  menu tinyint(4),
 
+
+#######################################
+CREATE TABLE IF NOT EXISTS sites_donor(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  site varchar(255) NOT NULL,
 
   PRIMARY KEY (id),
-  UNIQUE KEY link(link),
-  KEY (heading,category)
-)ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;*/
+  UNIQUE KEY link(site)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+#INSERT INTO `sites_donor` (`id`, `site`) VALUES (NULL, 'http://klopotenko.com');
+
+CREATE TABLE IF NOT EXISTS sites_donor_options(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  id_site int(11) NOT NULL,
+  rubrika varchar(255),#рубрика
+  rubrika_name varchar(255),#рубрика
+  category varchar(255),#категория
+  category_name varchar(255),#категория
+  page varchar(255),
+  page_end varchar(255),
+
+  max_page int(5),
+  data date,
+  PRIMARY KEY (id)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+#INSERT INTO `sites_donor_options` (`id`, `id_site`, `rubrika`, `rubrika_name`, `category`, `category_name`, page, page_end, `max_page`, `data`) VALUES (NULL, '1', NULL, NULL, '/category/12zakysky/', 'Закуски', 'page/', '/', '3', NULL);
+
+#INSERT INTO `sites_donor_options` (`id`, `id_site`, `rubrika`, `rubrika_name`, `category`, `category_name`, page, page_end, `max_page`, `data`) VALUES (NULL, '1', NULL, NULL, '/category/13salaty/', 'Салаты', 'page/', '/', '3', NULL);
+
+
+CREATE TABLE IF NOT EXISTS sites_donor_link(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  link_donor varchar(255) NOT NULL,
+  rubrika varchar(255),#рубрика
+  category varchar(255),#категория
+  data date,
+  PRIMARY KEY (id),
+  UNIQUE KEY link_donor(link_donor)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+#######################################
