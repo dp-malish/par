@@ -24,8 +24,8 @@ $pageText =new Curl();
 $page=$pageText->connectLow(URL.RUBRICA.CATEGORY.$page);
 
 $cat_page = phpQuery::newDocument($page);
-
-// сделать caption
+/*
+// сделать caption donor
 $paginator = $cat_page->find('main > div.row > div.col-xs-12 > article > header > h2 > a');
 foreach($paginator as $link){
     $x=pq($link)->html();
@@ -34,32 +34,24 @@ foreach($paginator as $link){
     $url=pq($link)->attr('href');
     $arrForDB['donor'][]=$url;
 }
+*/
 
+// сделать short_text
 $cat_page->find('main > div.row > div.col-xs-12 > article > div.genpost-entry-content > a')->remove();
 $paginator = $cat_page->find('main > div.row > div.col-xs-12 > article > div.genpost-entry-content');
-
 foreach($paginator as $link){
     $x=pq($link)->html();
-
     //$rest = substr("abcdef", -1);// returns "f"
-
-    
     $arrForDB['short_text'][]=$x;
 }
 echo  print_r($arrForDB).'<br><br>';
 
-/*
-$paginator = $cat_page->find('main > div.row > div.col-xs-12 > article > div.genpost-entry-content');
+
+$paginator = $cat_page->find('main > div.row > div.col-xs-12 > article > figure > a > img');
 
 foreach($paginator as $link) {
-
-    $x = pq($link)->html();
-    if((strripos($x,' (видео)')!==false))$x= stristr($x, ' (видео)', true);
-    $arrForDB['caption'][]=$x;
-    //$a=pq($a)->remove('i');
-    //$a=pq($link)->html();
-    //$url = pq($link)->attr('href');
+    $x = pq($link)->attr('src');
     $mas_cat_url[] = $x;
 }
 
-var_dump($mas_cat_url);*/
+var_dump($mas_cat_url);

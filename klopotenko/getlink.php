@@ -1,6 +1,6 @@
 <?php
 $start = microtime(true);
-
+echo date('H:i:s')." Начинаем парсинг...";
 $site=$_SERVER['SERVER_NAME'];$root=$_SERVER['DOCUMENT_ROOT'];
 Error_Reporting(E_ALL & ~E_NOTICE);ini_set('display_errors',1);
 set_include_path(get_include_path().PATH_SEPARATOR.'../lib'.PATH_SEPARATOR.'../lib_parse'.PATH_SEPARATOR.'../phpQuery');
@@ -27,7 +27,7 @@ foreach($res as $k=>$v){
         $paginator = $cat_page->find('main > div.row > div.col-xs-12 > article > header > h2 > a');
         foreach($paginator as $link){
             $donor=$DB->realEscapeStr(pq($link)->attr('href'));
-            $sql='INSERT INTO sites_donor_link VALUES (NULL,'.$donor.',"'.$v['rubrika_name'].'","'.$v['category_name'].'",NULL);';
+            $sql='INSERT INTO sites_donor_link (id,link_donor,rubrika,category,data) VALUES (NULL,'.$donor.',"'.$v['rubrika_name'].'","'.$v['category_name'].'",NULL);';
             echo 'Категория '.$v['category_name'].' стр. '.$i.' - '.(($DB->boolSQL($sql))?'добавлена':'<span style="background-color:red">ошибка</span>').' - '.$donor.'<br>';
         }
     }
