@@ -63,17 +63,17 @@ CREATE TABLE IF NOT EXISTS sites_donor_options(
 
 
 CREATE TABLE IF NOT EXISTS sites_donor_link(
-  id int(11) NOT NULL AUTO_INCREMENT,
-  link_donor varchar(255) NOT NULL,
-  img_donor varchar(255),
-
-
-  site varchar(100),
-  rubrika varchar(255),#рубрика
-  category varchar(255),#категория
-  img_dir varchar(255),
-  img varchar(255),
-  data date,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `site` varchar(100),
+  `link_donor` varchar(255) NOT NULL,
+  `img_donor` varchar(255),
+  `short_text_donor` text,
+  `img_small` varchar(255),
+  `img_dir` varchar(255),
+  `rubrika` varchar(255),
+  `category` varchar(255),
+  `img` varchar(255),
+  `data` date,
   PRIMARY KEY (id),
   UNIQUE KEY link_donor(link_donor)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
