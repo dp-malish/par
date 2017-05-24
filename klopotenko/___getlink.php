@@ -15,6 +15,7 @@ $res=$DB->arrSQL($sql);
 
 foreach($res as $k=>$v){
     $short_url=$v['site'].$v['rubrika'].$v['category'];
+        
     $page=($v['max_page']=='')?1:$v['max_page'];
     $pageText =new Curl();
 
@@ -27,7 +28,7 @@ foreach($res as $k=>$v){
         $paginator = $cat_page->find('main > div.row > div.col-xs-12 > article > header > h2 > a');
         foreach($paginator as $link){
             $donor=$DB->realEscapeStr(pq($link)->attr('href'));
-            $sql='INSERT INTO sites_donor_link (id,link_donor,rubrika,category,data) VALUES (NULL,'.$donor.',"'.$v['rubrika_name'].'","'.$v['category_name'].'",NULL);';
+            $sql='INSERT INTO sites_donor_link (id,id_opt,link_donor,rubrika,category,data) VALUES (NULL,"'.$v['id'].'",'.$donor.',"'.$v['rubrika_name'].'","'.$v['category_name'].'",NULL);';
             echo 'Категория '.$v['category_name'].' стр. '.$i.' - '.(($DB->boolSQL($sql))?'добавлена':'<span style="background-color:red">ошибка</span>').' - '.$donor.'<br>';
         }
     }

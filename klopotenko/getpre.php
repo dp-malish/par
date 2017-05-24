@@ -9,7 +9,7 @@ spl_autoload_register();
 
 $DB=new SQLi();
 
-$sql='SELECT m.id,y.site,y.paginator_link,y.paginator_img,y.paginator_short_text,y.paginator_short_text_del_link,m.rubrika,m.rubrika_name,m.category,m.category_name,m.page,m.page_end,m.max_page FROM sites_donor_options m
+$sql='SELECT m.id,y.site,y.paginator_link,y.paginator_img_s,y.paginator_short_text,y.paginator_short_text_del_link,m.rubrika,m.rubrika_name,m.category,m.category_name,m.page,m.page_end,m.max_page FROM sites_donor_options m
 LEFT JOIN sites_donor y ON m.id_site = y.id WHERE m.data IS NULL OR m.data!=CURRENT_DATE';
 
 $res=$DB->arrSQL($sql);
@@ -33,7 +33,7 @@ foreach($res as $k=>$v){
         foreach($paginator as $link){$arrForDB['donor'][]=$DB->realEscapeStr(pq($link)->attr('href'));}
 
         //рисунок
-        $paginator=$cat_page->find($v['paginator_img']);
+        $paginator=$cat_page->find($v['paginator_img_s']);
         foreach($paginator as $link){$arrForDB['img_donor'][]=$DB->realEscapeStr(pq($link)->attr('src'));}
 
         //короткий текст
@@ -45,8 +45,8 @@ foreach($res as $k=>$v){
         $count=count($arrForDB['donor']);
 
         for($i=0;$i<$count;$i++){
-            $sql='INSERT INTO sites_donor_link (id,site,link_donor,img_donor,short_text_donor,rubrika,category) VALUES 
-            (NULL,"'.$v['site'].'",'.$arrForDB['donor'][$i].','.$arrForDB['img_donor'][$i].','.$arrForDB['short_text_donor'][$i].','.'"'.$v['rubrika_name'].'","'.$v['category_name'].'");';
+            $sql='INSERT INTO sites_donor_link (id,id_opt,site,link_donor,img_s_donor,short_text_donor,rubrika,category) VALUES 
+            (NULL,"'.$v['id'].'","'.$v['site'].'",'.$arrForDB['donor'][$i].','.$arrForDB['img_donor'][$i].','.$arrForDB['short_text_donor'][$i].','.'"'.$v['rubrika_name'].'","'.$v['category_name'].'");';
             echo 'Категория '.$v['category_name'].' - '.(($DB->boolSQL($sql))?'добавлена':'<span style="background-color:darkred">ошибка</span>').' - '.$arrForDB['donor'][$i].'<br>';
         }
     }

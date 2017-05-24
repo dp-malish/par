@@ -35,6 +35,10 @@ CREATE TABLE IF NOT EXISTS content(
 CREATE TABLE IF NOT EXISTS sites_donor(
   id int(11) NOT NULL AUTO_INCREMENT,
   site varchar(100) NOT NULL,
+  `paginator_link` varchar(255),
+  paginator_img_s varchar(255),
+  `paginator_short_text` varchar(255),
+  `paginator_short_text_del_link` varchar(255),
   PRIMARY KEY (id),
   UNIQUE KEY link(site)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
@@ -54,22 +58,31 @@ CREATE TABLE IF NOT EXISTS sites_donor_options(
 
   max_page int(5),
   data date,
+
+  img_s_dir varchar(255),
+  img_s_table varchar(255),
+
+
   PRIMARY KEY (id)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-#INSERT INTO `sites_donor_options` (`id`, `id_site`, `rubrika`, `rubrika_name`, `category`, `category_name`, page, page_end, `max_page`, `data`) VALUES (NULL, '1', NULL, NULL, '/category/12zakysky/', 'Закуски', 'page/', '/', '3', NULL);
-
-#INSERT INTO `sites_donor_options` (`id`, `id_site`, `rubrika`, `rubrika_name`, `category`, `category_name`, page, page_end, `max_page`, `data`) VALUES (NULL, '1', NULL, NULL, '/category/13salaty/', 'Салаты', 'page/', '/', '3', NULL);
+INSERT INTO `sites_donor_options` (`id`, `id_site`, `rubrika`, `rubrika_name`, `category`, `category_name`, `page`, `page_end`, `max_page`, `data`) VALUES
+  (1, 1, NULL, NULL, '/category/12zakysky/', 'закуски', 'page/', '/', 3, '2017-05-24'),
+  (2, 1, NULL, NULL, '/category/13salaty/', 'салаты', 'page/', '/', 3, '2017-05-24'),
+  (3, 1, NULL, NULL, '/category/14soups/', 'супы', 'page/', '/', 2, '2017-05-24');
 
 
 CREATE TABLE IF NOT EXISTS sites_donor_link(
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  id_opt int(11),
   `site` varchar(100),
   `link_donor` varchar(255) NOT NULL,
-  `img_donor` varchar(255),
+  `img_s_donor` varchar(255),
   `short_text_donor` text,
-  `img_small` varchar(255),
-  `img_dir` varchar(255),
+  img_s_table varchar(255),
+  `img_s` varchar(255),
+  `img_s_dir` varchar(255),
+  `img_s_name` varchar(255),
   `rubrika` varchar(255),
   `category` varchar(255),
   `img` varchar(255),
