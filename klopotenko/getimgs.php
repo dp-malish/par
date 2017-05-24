@@ -13,12 +13,18 @@ spl_autoload_register();
 
 $DB=new SQLi();
 
-$sql='SELECT m.id,m.img_s_donor
-
- FROM sites_donor_link m
-LEFT JOIN sites_donor_options  y ON m.id_site = y.id WHERE m.data IS NULL OR m.data!=CURRENT_DATE';
+$sql='SELECT m.id,m.img_s_donor,y.img_s_dir FROM sites_donor_link m
+LEFT JOIN sites_donor_options  y ON m.id_opt = y.id WHERE y.img_s_dir IS NOT NULL';
 
 $res=$DB->arrSQL($sql);
+if($res){
+    foreach($res as $k => $v) {
+        $path = realpath(__DIR__) . $v['img_s_dir'];
+        //echo $path . '<br>';
+        if (!file_exists($path)) mkdir($path, 0777, true);
+    }
+    echo 'Каталоги для изображений обновлены<br>';
+}
 
 
 
