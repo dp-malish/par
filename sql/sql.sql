@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS sites_donor_link(
   `link_donor` varchar(255) NOT NULL,
   `img_s_donor` varchar(255),
   `short_text_donor` text,
-  img_s_table varchar(255),
+  img_s_table varchar(255),# таблица картинки маленькой
   `img_s` varchar(255),
   `img_s_dir` varchar(255),
   `img_s_name` varchar(255),
@@ -90,4 +90,6 @@ CREATE TABLE IF NOT EXISTS sites_donor_link(
   PRIMARY KEY (id),
   UNIQUE KEY link_donor(link_donor)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+UPDATE sites_donor_link SET img_s_dir=NULL;
 #######################################
