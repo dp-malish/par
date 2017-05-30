@@ -5,7 +5,7 @@
  * User: WinTeh
  * Date: 21.12.2016
  */
-class Curl{
+class Par_curl{
 
     public function connectLow($url){
         $url=Validator::html_cod($url);

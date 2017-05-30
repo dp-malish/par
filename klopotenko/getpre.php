@@ -17,7 +17,7 @@ $res=$DB->arrSQL($sql);
 foreach($res as $k=>$v){
     $short_url=$v['site'].$v['rubrika'].$v['category'];
     $page=($v['max_page']=='')?1:$v['max_page'];
-    $pageText =new Curl();
+    $pageText =new Par_curl();
 
     for($y=1;$y<=$page;$y++){
         $arrForDB=[];
