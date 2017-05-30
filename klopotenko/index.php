@@ -20,7 +20,7 @@ spl_autoload_register();
 
 $pageText =new Par_curl();
 //$page=$pageText->connectLow(URL.RUBRICA.CATEGORY.$page);
-$page=$pageText->connectLow('http://klopotenko.com/remulad-iz-seldereja/');
+$page=$pageText->connectLow('http://klopotenko.com/salat-s-chernobrivcami/');
 
 $cat_page = phpQuery::newDocument($page);
 

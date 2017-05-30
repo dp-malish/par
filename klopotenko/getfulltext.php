@@ -1,8 +1,9 @@
 <?php
-$start = microtime(true);
+$start=microtime(true);
 echo date('H:i:s').' Начинаем парсинг...<br>';
 $site=$_SERVER['SERVER_NAME'];$root=$_SERVER['DOCUMENT_ROOT'];
 Error_Reporting(E_ALL & ~E_NOTICE);ini_set('display_errors',1);
+ini_set('max_execution_time','18000000'); //время выполнения скрипта
 set_include_path(get_include_path().PATH_SEPARATOR.'../lib'.PATH_SEPARATOR.'../lib_parse'.PATH_SEPARATOR.'../phpQuery');
 spl_autoload_register();
 
@@ -14,13 +15,19 @@ $sql='SELECT m.id, m.link_donor, y.paginator_full_text FROM sites_donor_link m L
 $res=$DB->arrSQL($sql);
 
 foreach($res as $k=>$v){
+    $DB=new SQLi();
+
     $pageText =new Par_curl();
+    $page=$pageText->connectLow($v['link_donor']);
+    $cat_page = phpQuery::newDocument($page);
 
-
-    
-    
-    /*$sql='UPDATE sites_donor_options SET data=CURRENT_DATE WHERE id='.$v['id'];
-    if($DB->boolSQL($sql))echo '<span style="background-color:#'.rand(0,9).'399ff">**************************Проведено!**************************</span><br><br>';else echo '<span style="background-color:red">Ошибка - не проведено...</span><br><br>';*/
+    $paginator = $cat_page->find($v['paginator_full_text']);
+    foreach($paginator as $link){
+        $text=pq($link)->html();
+        if($DB->boolSQL('UPDATE sites_donor_link SET full_text_donor='.$DB->realEscapeStr($text).' WHERE id='.$v['id'])){
+            echo 'Ссылка '.$v['link_donor'].' - добавлена<br>';
+        }else echo '<span style="background-color:darkred">Ссылка '.$v['link_donor'].' - не добавлена</span><br>';
+    }
 }
 
 
