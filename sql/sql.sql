@@ -32,6 +32,8 @@ CREATE TABLE IF NOT EXISTS content(
 
 
 #######################################
+DROP TABLE sites_donor;
+
 CREATE TABLE IF NOT EXISTS sites_donor(
   id int(11) NOT NULL AUTO_INCREMENT,
   site varchar(100) NOT NULL,
@@ -39,12 +41,14 @@ CREATE TABLE IF NOT EXISTS sites_donor(
   paginator_img_s varchar(255),
   `paginator_short_text` varchar(255),
   `paginator_short_text_del_link` varchar(255),
+  `paginator_full_text` varchar(255),
   PRIMARY KEY (id),
   UNIQUE KEY link(site)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-#INSERT INTO `sites_donor` (`id`, `site`) VALUES (NULL, 'http://klopotenko.com');
-#UPDATE `sites_donor` SET `paginator_link` = 'main > div.row > div.col-xs-12 > article > header > h2 > a', `paginator_img` = 'main > div.row > div.col-xs-12 > article > figure > a > img' WHERE `sites_donor`.`id` = 1;
+INSERT INTO `sites_donor` (`id`, `site`, `paginator_link`, `paginator_img_s`, `paginator_short_text`, `paginator_short_text_del_link`,paginator_full_text) VALUES
+  (1, 'http://klopotenko.com', 'main > div.row > div.col-xs-12 > article > header > h2 > a', 'main > div.row > div.col-xs-12 > article > figure > a > img', 'main > div.row > div.col-xs-12 > article > div.genpost-entry-content', '>a','main>article');
+
 
 CREATE TABLE IF NOT EXISTS sites_donor_options(
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -75,6 +79,7 @@ INSERT INTO `sites_donor_options` (`id`, `id_site`, `rubrika`, `rubrika_name`, `
 CREATE TABLE IF NOT EXISTS sites_donor_link(
   `id` int(11) NOT NULL AUTO_INCREMENT,
   id_opt int(11),
+  id_site int(11),
   `site` varchar(100),
   `link_donor` varchar(255) NOT NULL,
   `img_s_donor` varchar(255),
@@ -85,11 +90,17 @@ CREATE TABLE IF NOT EXISTS sites_donor_link(
   `img_s_name` varchar(255),
   `rubrika` varchar(255),
   `category` varchar(255),
+
+  full_text_donor text,
+
+
   `img` varchar(255),
   `data` date,
   PRIMARY KEY (id),
   UNIQUE KEY link_donor(link_donor)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+DROP TABLE sites_donor_link;
 
 UPDATE sites_donor_link SET img_s_dir=NULL;
 #######################################

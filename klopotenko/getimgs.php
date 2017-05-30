@@ -7,6 +7,9 @@ $start = microtime(true);
 echo date('H:i:s').' Начинаем парсинг...<br><br>';
 $site=$_SERVER['SERVER_NAME'];$root=$_SERVER['DOCUMENT_ROOT'];
 Error_Reporting(E_ALL & ~E_NOTICE);ini_set('display_errors',1);
+
+ini_set('max_execution_time','18000000'); //время выполнения скрипта
+
 set_include_path(get_include_path().PATH_SEPARATOR.'../lib'.PATH_SEPARATOR.'../lib_parse'.PATH_SEPARATOR.'../phpQuery');
 spl_autoload_register();
 
