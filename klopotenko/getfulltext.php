@@ -15,7 +15,6 @@ $sql='SELECT m.id, m.link_donor, y.paginator_full_text FROM sites_donor_link m L
 $res=$DB->arrSQL($sql);
 
 foreach($res as $k=>$v){
-    $DB=new SQLi();
 
     $pageText =new Par_curl();
     $page=$pageText->connectLow($v['link_donor']);

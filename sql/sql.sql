@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS content(
 
 
 #######################################
+
 DROP TABLE sites_donor;
 
 CREATE TABLE IF NOT EXISTS sites_donor(
@@ -41,14 +42,18 @@ CREATE TABLE IF NOT EXISTS sites_donor(
   paginator_img_s varchar(255),
   `paginator_short_text` varchar(255),
   `paginator_short_text_del_link` varchar(255),
-  `paginator_full_text` varchar(255),
+  paginator_full_text varchar(255),
+  paginator_full_text_caption varchar(255),
+  paginator_full_text_caption_parse varchar(255),
+  paginator_full_text_remove varchar(255) COMMENT 'разделитель - #',
   PRIMARY KEY (id),
   UNIQUE KEY link(site)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-INSERT INTO `sites_donor` (`id`, `site`, `paginator_link`, `paginator_img_s`, `paginator_short_text`, `paginator_short_text_del_link`,paginator_full_text) VALUES
-  (1, 'http://klopotenko.com', 'main > div.row > div.col-xs-12 > article > header > h2 > a', 'main > div.row > div.col-xs-12 > article > figure > a > img', 'main > div.row > div.col-xs-12 > article > div.genpost-entry-content', '>a','main>article');
+INSERT INTO `sites_donor` (`id`, `site`, `paginator_link`, `paginator_img_s`, `paginator_short_text`, `paginator_short_text_del_link`,paginator_full_text,paginator_full_text_caption,paginator_full_text_caption_parse,paginator_full_text_remove) VALUES
+  (1, 'http://klopotenko.com', 'main > div.row > div.col-xs-12 > article > header > h2 > a', 'main > div.row > div.col-xs-12 > article > figure > a > img', 'main > div.row > div.col-xs-12 > article > div.genpost-entry-content', '>a','main>article','h1','(видео)',NULL);
 
+#######################################
 
 CREATE TABLE IF NOT EXISTS sites_donor_options(
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -92,6 +97,7 @@ CREATE TABLE IF NOT EXISTS sites_donor_link(
   `category` varchar(255),
 
   full_text_donor text,
+  full_text_caption text,
 
 
   `img` varchar(255),

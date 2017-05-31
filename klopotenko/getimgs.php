@@ -1,9 +1,5 @@
 <?php
-/**
- * User: Пикс
- * Date: 24.05.2017
- */
-$start = microtime(true);
+$start=microtime(true);
 echo date('H:i:s').' Начинаем парсинг...<br><br>';
 $site=$_SERVER['SERVER_NAME'];$root=$_SERVER['DOCUMENT_ROOT'];
 Error_Reporting(E_ALL & ~E_NOTICE);ini_set('display_errors',1);
@@ -13,19 +9,16 @@ ini_set('max_execution_time','18000000'); //время выполнения ск
 set_include_path(get_include_path().PATH_SEPARATOR.'../lib'.PATH_SEPARATOR.'../lib_parse'.PATH_SEPARATOR.'../phpQuery');
 spl_autoload_register();
 
-
 if(empty($_GET)){
-
     echo '<ul>
         <li><a href="?setdir">Установить каталог</a></li>
         <li><a href="?copyimg">Скопировать изображения</a></li>
         <li><a href="?copyimgtodb">Скопировать изображения в БД</a></li>        
         </ul>';
-
 }else{
     $DB = new SQLi();
 
-    if(isset($_GET{'setdir'})){
+    if(isset($_GET['setdir'])){
         $sql='SELECT m.id,m.link_donor,m.img_s_donor,y.img_s_dir,y.img_s_table FROM sites_donor_link m
 LEFT JOIN sites_donor_options  y ON m.id_opt = y.id WHERE y.img_s_dir IS NOT NULL';
         $res=$DB->arrSQL($sql);
@@ -41,7 +34,7 @@ LEFT JOIN sites_donor_options  y ON m.id_opt = y.id WHERE y.img_s_dir IS NOT NUL
             echo 'Каталоги для изображений обновлены<br>';
         }
         echo '<p>Следущий этап <a href="?copyimg">Скопировать изображения</a></p>';
-    }elseif(isset($_GET{'copyimg'})){
+    }elseif(isset($_GET['copyimg'])){
         $sql='SELECT id,site,img_s_donor,img_s_table,img_s_dir FROM sites_donor_link WHERE img_s_name IS NULL';
         $res=$DB->arrSQL($sql);
         if($res){
@@ -66,7 +59,7 @@ LEFT JOIN sites_donor_options  y ON m.id_opt = y.id WHERE y.img_s_dir IS NOT NUL
             }
         }
         echo '<p>Следущий этап <a href="?copyimgtodb">Скопировать изображения в БД</a></p>';
-    }elseif(isset($_GET{'copyimgtodb'})){
+    }elseif(isset($_GET['copyimgtodb'])){
 
         $sql='SELECT DISTINCT img_s_table FROM sites_donor_link WHERE img_s_name IS NOT NULL AND img_s IS NULL';
         $res=$DB->arrSQL($sql);
@@ -99,10 +92,6 @@ LEFT JOIN sites_donor_options  y ON m.id_opt = y.id WHERE y.img_s_dir IS NOT NUL
 
 
 
-
-
-
-
-///////////////////////
+//////////////////////
 $time=microtime(true)-$start;
 printf("<br>".date('H:i:s').' Готово! Процесс выполнялся %.4F сек.',$time);

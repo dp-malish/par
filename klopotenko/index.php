@@ -24,7 +24,7 @@ $page=$pageText->connectLow('http://klopotenko.com/salat-s-chernobrivcami/');
 
 $cat_page = phpQuery::newDocument($page);
 
-$paginator = $cat_page->find('main>article');
+$paginator = $cat_page->find('main>article>header>h1');
 foreach($paginator as $link){
     $x=pq($link)->html();
 
