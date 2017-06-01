@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS sites_donor(
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 INSERT INTO `sites_donor` (`id`, `site`, `paginator_link`, `paginator_img_s`, `paginator_short_text`, `paginator_short_text_del_link`,paginator_full_text,paginator_full_text_caption,paginator_full_text_caption_parse,paginator_full_text_remove) VALUES
-  (1, 'http://klopotenko.com', 'main > div.row > div.col-xs-12 > article > header > h2 > a', 'main > div.row > div.col-xs-12 > article > figure > a > img', 'main > div.row > div.col-xs-12 > article > div.genpost-entry-content', '>a','main>article','h1','(видео)',NULL);
+  (1, 'http://klopotenko.com', 'main > div.row > div.col-xs-12 > article > header > h2 > a', 'main > div.row > div.col-xs-12 > article > figure > a > img', 'main > div.row > div.col-xs-12 > article > div.genpost-entry-content', '>a','main>article','h1','(видео)','div.single-entry-meta');
 
 #######################################
 

@@ -37,10 +37,22 @@ WHERE m.full_text_donor IS NOT NULL AND m.full_text_caption IS NULL';
         echo '<p>Следущий этап <a href="?removehlam">Очистить текст от стилей и мусора...</a></p>';
     }elseif(isset($_GET['removehlam'])){
         $sql='SELECT m.id, m.link_donor, m.full_text_donor, y.paginator_full_text_remove
-
 FROM sites_donor_link m LEFT JOIN sites_donor y ON m.id_site = y.id WHERE m.full_text_donor IS NOT NULL LIMIT 1';
+        $res=$DB->arrSQL($sql);
+        foreach($res as $k=>$v){
 
+            $cat_page = phpQuery::newDocument($v['full_text_donor']);
+            $cat_page->find($v['paginator_full_text_remove'])->remove();
+            $paginator=$cat_page->find();
 
+            foreach($paginator as $link){
+                $x=pq($link)->html();
+                echo $x;
+            }
+
+            echo $v['full_text_donor'].'<br>'.$v['paginator_full_text_remove'];
+
+        }
     }
 }
 
