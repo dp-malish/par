@@ -45,13 +45,16 @@ CREATE TABLE IF NOT EXISTS sites_donor(
   paginator_full_text varchar(255),
   paginator_full_text_caption varchar(255),
   paginator_full_text_caption_parse varchar(255),
-  paginator_full_text_remove varchar(255) COMMENT 'разделитель - #',
+  paginator_full_text_remove varchar(255) COMMENT 'разделитель - ?',
+  paginator_full_text_remove_attr varchar(255) COMMENT 'разделитель - ?',
+  paginator_img varchar(255),
   PRIMARY KEY (id),
   UNIQUE KEY link(site)
 )ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-INSERT INTO `sites_donor` (`id`, `site`, `paginator_link`, `paginator_img_s`, `paginator_short_text`, `paginator_short_text_del_link`,paginator_full_text,paginator_full_text_caption,paginator_full_text_caption_parse,paginator_full_text_remove) VALUES
-  (1, 'http://klopotenko.com', 'main > div.row > div.col-xs-12 > article > header > h2 > a', 'main > div.row > div.col-xs-12 > article > figure > a > img', 'main > div.row > div.col-xs-12 > article > div.genpost-entry-content', '>a','main>article','h1','(видео)','div.single-entry-meta');
+INSERT INTO `sites_donor` (`id`, `site`, `paginator_link`, `paginator_img_s`, `paginator_short_text`, `paginator_short_text_del_link`, `paginator_full_text`, `paginator_full_text_caption`, `paginator_full_text_caption_parse`, `paginator_full_text_remove`,paginator_full_text_remove_attr,paginator_img) VALUES
+  (1, 'http://klopotenko.com', 'main > div.row > div.col-xs-12 > article > header > h2 > a', 'main > div.row > div.col-xs-12 > article > figure > a > img', 'main > div.row > div.col-xs-12 > article > div.genpost-entry-content', '>a', 'main', 'h1.single-entry-title', '(видео)', 'div.single-entry-meta?header?div.social-likes?form?div.yarpp-related?nav?footer?frame?div#disqus_thread','','img');
+
 
 #######################################
 
@@ -99,6 +102,8 @@ CREATE TABLE IF NOT EXISTS sites_donor_link(
   full_text_donor text,
   full_text_caption text,
 
+  img_donor varchar(255),
+
 
   `img` varchar(255),
   `data` date,
@@ -109,4 +114,6 @@ CREATE TABLE IF NOT EXISTS sites_donor_link(
 DROP TABLE sites_donor_link;
 
 UPDATE sites_donor_link SET img_s_dir=NULL;
+UPDATE sites_donor_link SET full_text_donor=NULL;
+UPDATE sites_donor_link SET full_text_caption=NULL;
 #######################################

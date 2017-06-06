@@ -23,6 +23,10 @@ foreach($res as $k=>$v){
     $paginator = $cat_page->find($v['paginator_full_text']);
     foreach($paginator as $link){
         $text=pq($link)->html();
+
+        $smile=[':)',':(',';)','🙂','😉'];
+
+        $text=str_replace($smile,'',$text);
         if($DB->boolSQL('UPDATE sites_donor_link SET full_text_donor='.$DB->realEscapeStr($text).' WHERE id='.$v['id'])){
             echo 'Ссылка '.$v['link_donor'].' - добавлена<br>';
         }else echo '<span style="background-color:darkred">Ссылка '.$v['link_donor'].' - не добавлена</span><br>';
