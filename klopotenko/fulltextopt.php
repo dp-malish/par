@@ -11,7 +11,7 @@ if(empty($_GET)){
     echo '<ul>
         <li><a href="?getcaption">Скопировать название статей</a></li>
         <li><a href="?removehlam">Очистить текст от мусора...</a></li>
-        <li><a href="?removestyle">Очистить текст от стилей...</a></li>
+        <li><a href="?removestyle">Очистить текст от стилей и атрибутов...</a></li>
      
         </ul>';
 }else{$DB=new SQLi();
@@ -42,7 +42,7 @@ WHERE m.full_text_donor IS NOT NULL AND m.full_text_caption IS NULL';
 FROM sites_donor_link m LEFT JOIN sites_donor y ON m.id_site = y.id WHERE m.full_text_donor IS NOT NULL';
         $res=$DB->arrSQL($sql);
         foreach($res as $k=>$v){
-            $remove_parts=explode('?',$v['paginator_full_text_remove']);
+            $remove_parts=explode('?#',$v['paginator_full_text_remove']);
             $cat_page = phpQuery::newDocument($v['full_text_donor']);
 
             foreach($remove_parts as $del_par){
@@ -61,13 +61,13 @@ FROM sites_donor_link m LEFT JOIN sites_donor y ON m.id_site = y.id WHERE m.full
             //echo '<br><br><br><hr>'.$v['full_text_donor'].'<br>'.$v['paginator_full_text_remove'];
 
         }
-        echo '<p>Следущий этап <a href="?removestyle">Очистить текст от стилей...</a></p>';
+        echo '<p>Следущий этап <a href="?removestyle">Очистить текст от стилей и атрибутов...</a></p>';
     }elseif(isset($_GET['removestyle'])){
         $sql='SELECT m.id, m.link_donor, m.full_text_donor, y.paginator_full_text_remove_attr
-FROM sites_donor_link m LEFT JOIN sites_donor y ON m.id_site = y.id WHERE m.full_text_donor IS NOT NULL LIMIT 1';
+FROM sites_donor_link m LEFT JOIN sites_donor y ON m.id_site = y.id WHERE m.full_text_donor IS NOT NULL';
         $res=$DB->arrSQL($sql);
         foreach($res as $k=>$v){
-            $remove_parts=explode('?',$v['paginator_full_text_remove_attr']);
+            $remove_parts=explode('?#',$v['paginator_full_text_remove_attr']);
             $remove_attr=['style','class','id'];
             $cat_page=phpQuery::newDocument($v['full_text_donor']);
 
@@ -79,16 +79,13 @@ FROM sites_donor_link m LEFT JOIN sites_donor y ON m.id_site = y.id WHERE m.full
             }
 
             $paginator=$cat_page->contents();
-/*
+
             $sql='UPDATE sites_donor_link SET full_text_donor='.$DB->realEscapeStr($paginator).' WHERE id='.$v['id'];
+            if($DB->boolSQL($sql))echo 'Атребуты по ссылке '.$v['link_donor'].' - упрощены<br>';
+            else echo '<span style="background-color:darkred">'.'Ошибка!!! Атребуты по ссылке '.$v['link_donor'].' - не упрощены</span><br>';
 
-            if($DB->boolSQL($sql))echo 'Текст по ссылке '.$v['link_donor'].' - упрощён<br>';
-            else echo '<span style="background-color:darkred">'.'Ошибка!!! Текст по ссылке '.$v['link_donor'].' - не упрощён</span><br>';*/
-
-            echo '!!!!!'.$paginator.'<br><br><br>'.$sql;
-
+            //echo '!!!!!'.$paginator.'<br><br><br>'.$sql;
             //echo '<br><br><br><hr>'.$v['full_text_donor'].'<br>'.$v['paginator_full_text_remove'];
-
         }
     }
 }
