@@ -19,7 +19,7 @@ if(empty($_GET)){
     $DB = new SQLi();
 
     if(isset($_GET['getlink'])){
-        $sql='SELECT id,link_donor,full_text_donor FROM sites_donor_link WHERE img_donor IS NULL limit 1';
+        $sql='SELECT id,link_donor,full_text_donor FROM sites_donor_link WHERE img_donor IS NULL limit 5';
         $res=$DB->arrSQL($sql);
         if($res){
             foreach($res as $k=>$v){
@@ -34,8 +34,8 @@ if(empty($_GET)){
                 }
 
                 $sql='UPDATE sites_donor_link SET img_donor='.$DB->realEscapeStr($img_link).' WHERE id='.$v['id'];
-                echo $sql;
-                //echo 'Запись №' . $v['id'] . ' ссылка ' . $v['link_donor'] . ' каталог изображения - ' . (($DB->boolSQL($sql)) ? 'добавлен' : '<span style="background-color:darkred">ошибка</span>') . '<br>';
+                echo $sql.'<br>';
+                //echo 'Ссылки на изображение в записи №' . $v['id'] . ' ' . $v['link_donor'] . ' - ' . (($DB->boolSQL($sql)) ? 'добавлена' : '<span style="background-color:darkred">ошибка</span>') . '<br>';
             }
             //echo 'Каталоги для изображений обновлены<br>';
         }
